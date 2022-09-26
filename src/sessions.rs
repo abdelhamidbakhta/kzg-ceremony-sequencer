@@ -54,12 +54,12 @@ impl IntoResponse for SessionError {
 
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct IdToken {
-    pub sub:      String,
+    pub sub: String,
     pub nickname: String,
     // The provider whom the client used to login with
     // Example, Google, Ethereum, Facebook
     pub provider: String,
-    pub exp:      u64,
+    pub exp: u64,
 }
 
 impl IdToken {
@@ -74,9 +74,9 @@ impl IdToken {
 
 #[derive(Debug, Clone)]
 pub struct SessionInfo {
-    pub token:                 IdToken,
+    pub token: IdToken,
     // Specifies the last time the user pinged
-    pub last_ping_time:        Instant,
+    pub last_ping_time: Instant,
     // Indicates whether an early /lobby/try_contribute call is accepted.
     // (only allowed right after authentication)
     pub is_first_ping_attempt: bool,

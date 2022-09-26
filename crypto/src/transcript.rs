@@ -43,10 +43,10 @@ impl Transcript {
         assert!(num_g2 >= 2);
         assert!(num_g1 >= num_g2);
         Self {
-            powers:  Powers::new(num_g1, num_g2),
+            powers: Powers::new(num_g1, num_g2),
             witness: Witness {
                 products: vec![G1::one()],
-                pubkeys:  vec![G2::one()],
+                pubkeys: vec![G2::one()],
             },
         }
     }

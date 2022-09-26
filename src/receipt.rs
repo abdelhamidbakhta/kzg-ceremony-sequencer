@@ -9,7 +9,7 @@ use serde::Serialize;
 #[derive(Serialize)]
 pub struct Receipt<T> {
     pub(crate) id_token: IdToken,
-    pub witness:         T,
+    pub witness: T,
 }
 
 impl<T: Serialize + Send + Sync> Receipt<T> {

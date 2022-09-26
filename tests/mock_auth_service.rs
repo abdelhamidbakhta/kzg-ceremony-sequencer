@@ -27,7 +27,7 @@ pub fn start_server(auth_state: AuthState) -> Server<AddrIncoming, IntoMakeServi
 
 #[derive(Clone, Debug, Serialize)]
 pub struct GhUser {
-    pub name:       String,
+    pub name: String,
     pub created_at: String,
 }
 
@@ -38,7 +38,7 @@ pub struct AuthState {
 
 #[derive(Default)]
 struct GhUsersState {
-    users:   HashMap<u64, GhUser>,
+    users: HashMap<u64, GhUser>,
     next_id: u64,
 }
 

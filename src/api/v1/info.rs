@@ -12,7 +12,7 @@ use tokio_util::io::ReaderStream;
 
 #[derive(Debug, Serialize, PartialEq, Eq)]
 pub struct StatusResponse {
-    lobby_size:        usize,
+    lobby_size: usize,
     num_contributions: usize,
     sequencer_address: String,
 }

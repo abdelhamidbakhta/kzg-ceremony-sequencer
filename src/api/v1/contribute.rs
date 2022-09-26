@@ -20,7 +20,7 @@ use thiserror::Error;
 
 #[derive(Serialize)]
 pub struct ContributeReceipt<T> {
-    receipt:   Receipt<T>,
+    receipt: Receipt<T>,
     signature: Signature,
 }
 

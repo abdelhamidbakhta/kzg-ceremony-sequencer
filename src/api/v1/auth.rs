@@ -58,12 +58,12 @@ pub enum AuthError {
 }
 
 pub struct UserVerified {
-    id_token:   IdToken,
+    id_token: IdToken,
     session_id: String,
 }
 
 pub struct AuthUrl {
-    eth_auth_url:    String,
+    eth_auth_url: String,
     github_auth_url: String,
 }
 
@@ -195,7 +195,7 @@ pub async fn auth_client_link(
         .insert(csrf_token.secret().clone());
 
     Ok(AuthUrl {
-        eth_auth_url:    auth_url.to_string(),
+        eth_auth_url: auth_url.to_string(),
         github_auth_url: gh_url.to_string(),
     })
 }
@@ -207,19 +207,19 @@ pub async fn auth_client_link(
 // an identity provider
 #[derive(Debug, Deserialize)]
 pub struct AuthPayload {
-    code:  String,
+    code: String,
     state: String,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 struct AuthenticatedUser {
-    uid:      String,
+    uid: String,
     nickname: String,
 }
 
 #[derive(Debug, Deserialize)]
 struct GhUserInfo {
-    login:      String,
+    login: String,
     created_at: String,
 }
 
@@ -257,7 +257,7 @@ pub async fn github_callback(
         return Err(AuthError::UserCreatedAfterDeadline);
     }
     let user = AuthenticatedUser {
-        uid:      format!("github | {}", gh_user_info.login),
+        uid: format!("github | {}", gh_user_info.login),
         nickname: gh_user_info.login,
     };
     post_authenticate(auth_state, lobby_state, storage, user, AuthProvider::Github).await
@@ -265,7 +265,7 @@ pub async fn github_callback(
 
 #[derive(Debug, Deserialize)]
 struct EthUserInfo {
-    sub:                String,
+    sub: String,
     preferred_username: String,
 }
 
@@ -327,7 +327,7 @@ pub async fn eth_callback(
     }
 
     let user_data = AuthenticatedUser {
-        uid:      format!("eth | {}", address),
+        uid: format!("eth | {}", address),
         nickname: eth_user.preferred_username,
     };
 
@@ -409,19 +409,22 @@ async fn post_authenticate(
     };
 
     let id_token = IdToken {
-        sub:      user_data.uid,
+        sub: user_data.uid,
         provider: auth_provider.to_string().to_owned(),
         nickname: user_data.nickname,
-        exp:      u64::MAX,
+        exp: u64::MAX,
     };
 
     {
         let mut lobby = lobby_state.write().await;
-        lobby.participants.insert(session_id.clone(), SessionInfo {
-            token:                 id_token.clone(),
-            last_ping_time:        Instant::now(),
-            is_first_ping_attempt: true,
-        });
+        lobby.participants.insert(
+            session_id.clone(),
+            SessionInfo {
+                token: id_token.clone(),
+                last_ping_time: Instant::now(),
+                is_first_ping_attempt: true,
+            },
+        );
     }
 
     Ok(UserVerified {

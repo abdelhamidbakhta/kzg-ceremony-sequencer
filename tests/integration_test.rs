@@ -41,15 +41,15 @@ fn test_options() -> Options {
 }
 
 struct Harness {
-    options:         Options,
-    auth_state:      AuthState,
+    options: Options,
+    auth_state: AuthState,
     shutdown_sender: broadcast::Sender<()>,
     /// Needed to keep the lock on the server port for the duration of a test.
     #[allow(dead_code)]
-    lock:            MutexGuard<'static, ()>,
+    lock: MutexGuard<'static, ()>,
     /// Needed to keep the temp directory alive throughout the test.
     #[allow(dead_code)]
-    temp_dir:        TempDir,
+    temp_dir: TempDir,
 }
 
 impl Drop for Harness {
